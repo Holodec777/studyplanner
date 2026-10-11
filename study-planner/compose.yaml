@@ -1,0 +1,31 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: study_planner
+      POSTGRES_USER: study_planner
+      POSTGRES_PASSWORD: study_planner_local
+    ports:
+      - "5433:5432"
+    volumes:
+      - planner_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U study_planner -d study_planner"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+
+  app:
+    build: .
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: postgresql+psycopg://study_planner:study_planner_local@db:5432/study_planner
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  planner_data:

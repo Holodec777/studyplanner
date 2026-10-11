@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f6f7fb">
+    <title>Маяк — учебный планер</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/app.css">
+  </head>
+  <body>
+    <main class="login-shell" id="loginView">
+      <section class="login-story">
+        <a class="brand brand-light" href="#" aria-label="Маяк, на главную"><span class="brand-mark">м</span><span>маяк</span></a>
+        <div class="story-copy">
+          <span class="eyebrow">ТВОЙ УЧЕБНЫЙ РИТМ</span>
+          <h1>Все важное<br>на виду.</h1>
+          <p>Задачи, сроки и маленькие победы — в одном спокойном пространстве.</p>
+        </div>
+        <div class="story-note"><span class="note-icon">✦</span><span>Большие цели начинаются<br>с одного понятного шага.</span></div>
+        <div class="story-orbit orbit-one"></div><div class="story-orbit orbit-two"></div>
+      </section>
+      <section class="login-panel">
+        <div class="login-card">
+          <div class="mobile-brand brand"><span class="brand-mark">м</span><span>маяк</span></div>
+          <span class="eyebrow">С возвращением</span>
+          <h2>Войди в свой планер</h2>
+          <p class="muted">Продолжим с того места, где остановились.</p>
+          <form id="loginForm" class="form-stack">
+            <label>Логин<input name="username" autocomplete="username" minlength="3" required placeholder="Например, student"></label>
+            <label>Пароль<input name="password" type="password" autocomplete="current-password" minlength="8" required placeholder="Твой пароль"></label>
+            <p class="form-error" id="loginError" role="alert"></p>
+            <button class="button button-primary button-wide" type="submit">Войти <span aria-hidden="true">→</span></button>
+          </form>
+          <div class="demo-box">
+            <div class="demo-heading"><span>Демо-доступ</span><span class="demo-tag">локально</span></div>
+            <div class="demo-actions">
+              <button type="button" class="demo-button" data-demo="student"><span class="demo-avatar avatar-blue">У</span><span><strong>Ученик</strong><small>student / student123</small></span><span class="demo-arrow">↗</span></button>
+              <button type="button" class="demo-button" data-demo="admin"><span class="demo-avatar avatar-peach">А</span><span><strong>Администратор</strong><small>admin / admin123</small></span><span class="demo-arrow">↗</span></button>
+            </div>
+          </div>
+        </div>
+        <p class="login-footer">Локальный учебный проект · <a href="/docs" target="_blank" rel="noreferrer">API документация</a></p>
+      </section>
+    </main>
+
+    <div class="app-shell" id="appView" hidden>
+      <aside class="sidebar">
+        <a class="brand" href="#"><span class="brand-mark">м</span><span>маяк</span></a>
+        <div class="side-caption">РАБОЧЕЕ ПРОСТРАНСТВО</div>
+        <button class="nav-item active" type="button"><span class="nav-icon">▦</span>Обзор</button>
+        <div class="sidebar-bottom">
+          <div class="side-tip"><span class="tip-spark">✦</span><strong>Шаг за шагом</strong><p>Отмечай выполненное — так прогресс становится заметным.</p></div>
+          <div class="profile-row"><span class="profile-avatar" id="profileAvatar">У</span><span class="profile-copy"><strong id="profileName">Ученик</strong><small id="profileRole">Ученик</small></span><button id="logoutButton" class="icon-button logout-button" type="button" aria-label="Выйти из аккаунта" title="Выйти">↗</button></div>
+        </div>
+      </aside>
+
+      <main class="main-content">
+        <header class="page-header">
+          <div><div class="date-line" id="todayLabel"></div><h1 id="welcomeTitle">Добрый день!</h1><p class="muted" id="welcomeText">Вот твой план на ближайшее время.</p></div>
+          <button class="button button-primary" id="newAssignmentButton" type="button"><span class="plus">＋</span> Новая задача</button>
+        </header>
+
+        <section class="stat-grid" aria-label="Сводка по задачам">
+          <article class="stat-card stat-primary"><div class="stat-top"><span>Всего задач</span><span class="stat-symbol">▦</span></div><strong class="stat-value" id="totalStat">—</strong><span class="stat-foot">в твоем плане</span></article>
+          <article class="stat-card"><div class="stat-top"><span>На этой неделе</span><span class="stat-symbol symbol-yellow">◷</span></div><strong class="stat-value" id="dueStat">—</strong><span class="stat-foot">приближаются сроки</span></article>
+          <article class="stat-card"><div class="stat-top"><span>Просрочено</span><span class="stat-symbol symbol-coral">!</span></div><strong class="stat-value" id="overdueStat">—</strong><span class="stat-foot">задач требуют внимания</span></article>
+          <article class="stat-card"><div class="stat-top"><span>Готово</span><span class="stat-symbol symbol-green">✓</span></div><strong class="stat-value" id="doneStat">—</strong><span class="stat-foot">уже позади</span></article>
+        </section>
+
+        <section class="progress-panel">
+          <div class="progress-copy"><div class="progress-icon">✦</div><div><strong id="progressTitle">Хороший темп!</strong><p id="progressText">Каждая завершенная задача приближает тебя к цели.</p></div></div>
+          <div class="progress-meter"><div class="progress-label"><span>Прогресс</span><strong id="progressPercent">0%</strong></div><div class="progress-track"><span id="progressBar"></span></div></div>
+        </section>
+
+        <section class="tasks-section">
+          <div class="section-heading"><div><span class="eyebrow">ПЛАН НА ДЕНЬ</span><h2 id="tasksTitle">Мои задачи <span class="count-pill" id="taskCount">0</span></h2></div><div class="task-tools"><label class="search-box"><span aria-hidden="true">⌕</span><input id="searchInput" type="search" placeholder="Найти задачу" aria-label="Найти задачу"></label><label class="filter-box"><span class="sr-only">Фильтр по статусу</span><select id="statusFilter"><option value="all">Все статусы</option><option value="planned">Запланировано</option><option value="in_progress">В работе</option><option value="done">Готово</option></select></label></div></div>
+          <div class="task-list" id="taskList" aria-live="polite"><div class="loading-state">Загружаем твой план…</div></div>
+        </section>
+        <footer class="page-footer"><span>маяк · учебный планер</span><a href="/docs" target="_blank" rel="noreferrer">Открыть API <span aria-hidden="true">↗</span></a></footer>
+      </main>
+    </div>
+
+    <dialog class="assignment-dialog" id="assignmentDialog" aria-labelledby="dialogTitle">
+      <form id="assignmentForm" class="dialog-form">
+        <div class="dialog-heading"><div><span class="eyebrow">ТВОЙ ПЛАН</span><h2 id="dialogTitle">Новая задача</h2></div><button class="icon-button" id="closeDialogButton" type="button" aria-label="Закрыть">×</button></div>
+        <label>Название<input name="title" required minlength="3" maxlength="120" placeholder="Например, подготовить доклад"></label>
+        <label>Предмет<input name="subject" required minlength="2" maxlength="80" placeholder="Например, история"></label>
+        <label>Описание<textarea name="description" rows="3" maxlength="1000" placeholder="Что важно не забыть?"></textarea></label>
+        <div class="form-row"><label>Срок<input name="due_date" type="date" required></label><label>Приоритет<select name="priority"><option value="low">Низкий</option><option value="medium" selected>Обычный</option><option value="high">Высокий</option></select></label></div>
+        <label>Статус<select name="status"><option value="planned">Запланировано</option><option value="in_progress">В работе</option><option value="done">Готово</option></select></label>
+        <label id="ownerField" hidden>Назначить ученику<select name="owner_id" id="ownerSelect"></select></label>
+        <p class="form-error" id="assignmentError" role="alert"></p>
+        <div class="dialog-actions"><button class="button button-quiet" id="cancelDialogButton" type="button">Отмена</button><button class="button button-primary" id="saveAssignmentButton" type="submit">Сохранить задачу</button></div>
+      </form>
+    </dialog>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="/static/app.js" defer></script>
+  </body>
+</html>
